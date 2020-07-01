@@ -30,28 +30,43 @@ public class userController {
 	@RequestMapping(value = "/users/{id}")
 	public user finone(@PathVariable int id) {
 		user user = dao.findone(id);
-		if(user==null)
-			throw new usernotfoundException("id"+id);
+		if (user == null)
+			throw new usernotfoundException("id" + id);
 		return user;
 	}
 
 	@RequestMapping(value = "/users", method = RequestMethod.POST)
 	public ResponseEntity<Object> save(@RequestBody user usr) {
 		user saved = dao.save(usr);
+
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saved.getId())
 				.toUri();
 		return ResponseEntity.created(location).build();
 	}
+	/*
+	 * @RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE) public
+	 * void delete(@PathVariable int id) { user usr=dao.delte(id); if(usr==null)
+	 * throw new usernotfoundException("id"+id);
+	 * 
+	 * URI location =
+	 * ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand
+	 * (deleted.getId()) .toUri();
+	 * 
+	 * }
+	 */
+	
+	
 	@RequestMapping(value = "/users/{id}", method = RequestMethod.DELETE)
-	public void delete(@PathVariable int id) {
+	public  ResponseEntity<Object> delete(@PathVariable int id) {
 		user usr=dao.delte(id);
 		if(usr==null)
 			throw new usernotfoundException("id"+id);
+		return ResponseEntity.noContent().build();
 		/*
 		 * URI location =
 		 * ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand
 		 * (deleted.getId()) .toUri();
 		 */
 	}
-	
+
 }
