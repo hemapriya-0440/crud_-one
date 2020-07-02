@@ -2,9 +2,15 @@ package com.example.crudEx1.bean;
 
 import java.util.Date;
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
 public class user {
+	
 private Integer id;
+@Size(min=2,message = "should have atleast 2 characters")
 private String name;
+@Past
 private Date DOB;
 public Integer getId() {
 	return id;
@@ -12,7 +18,7 @@ public Integer getId() {
 public void setId(Integer id) {
 	this.id = id;
 }
-public String getName() {
+public String getName() { 
 	return name;
 }
 public void setName(String name) {
