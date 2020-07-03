@@ -1,14 +1,17 @@
 package com.example.crudEx1.controller;
 import java.net.URI;
 import java.util.List;
+import java.util.Locale;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.server.mvc.ControllerLinkBuilder;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +26,18 @@ import com.example.crudEx1.dao.userDao;
 public class userController {
 	@Autowired
 	userDao dao;
+	@Autowired
+	private MessageSource messagesource;
+	@RequestMapping(value="/hello-internationalized",method=RequestMethod.GET)
+	/*
+	 * public String hello(@RequestHeader(name="Accept-Language",required =
+	 * false)Locale locale ) { return messagesource.getMessage("hello.message",null,
+	 * locale);
+	 */
+	//or 
+	 public String hello( ) {
+		return messagesource.getMessage("hello.message",null,LocaleContextHolder.getLocale());
+	}
 
 	@RequestMapping(value = "/users", method = RequestMethod.GET)
 	public List<user> getallusers(user usr) {
