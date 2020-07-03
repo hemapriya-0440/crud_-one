@@ -1,9 +1,9 @@
 package com.example.crudEx1.filtering.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+@JsonIgnoreProperties(value = {"field1","field2"})
 public class somebean {
-	@JsonIgnore
+	//@JsonIgnore
 private String field1;
 private String field2;
 private String field3;
