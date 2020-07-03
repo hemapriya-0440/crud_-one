@@ -1,9 +1,11 @@
 package com.example.crudEx1.controller;
-
 import java.net.URI;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.server.mvc.ControllerLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,15 +30,20 @@ public class userController {
 	}
 
 	@RequestMapping(value = "/users/{id}")
+	//Resource<user> for hateous
 	public user finone(@PathVariable int id) {
 		user user = dao.findone(id);
 		if (user == null)
 			throw new usernotfoundException("id" + id);
+		//HATEOAS
+		//Resource<user> res=new Resource<user>();
+	//	ControllerLinkBuilder linkto=linkTo(methodOn(this.getClass()).getallusers());
+		//res.add(linkTo.withrEl("all-users"));
 		return user;
 	}
 
 	@RequestMapping(value = "/users", method = RequestMethod.POST)
-	public ResponseEntity<Object> save(@RequestBody user usr) {
+	public ResponseEntity<Object> save(@Valid @RequestBody user usr) {
 		user saved = dao.save(usr);
 
 		URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saved.getId())
@@ -68,4 +75,5 @@ public class userController {
 		 * (deleted.getId()) .toUri();
 		 */
 	}
-	}
+
+}
